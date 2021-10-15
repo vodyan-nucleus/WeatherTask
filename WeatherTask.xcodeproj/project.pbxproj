@@ -15,6 +15,10 @@
 		0DD71D482719E33F003BD69A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D472719E33F003BD69A /* TabBarController.swift */; };
 		0DD71D4A2719E45F003BD69A /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D492719E45F003BD69A /* WeatherViewController.swift */; };
 		0DD71D4C2719E57E003BD69A /* WeatherPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D4B2719E57E003BD69A /* WeatherPresenter.swift */; };
+		0DD71D4F2719E8EC003BD69A /* BasicInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D4E2719E8EC003BD69A /* BasicInfoTableViewCell.swift */; };
+		0DD71D512719E96F003BD69A /* HourlyForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D502719E96F003BD69A /* HourlyForecastTableViewCell.swift */; };
+		0DD71D532719E9FE003BD69A /* AdvancedInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D522719E9FE003BD69A /* AdvancedInfoTableViewCell.swift */; };
+		0DD71D552719EA59003BD69A /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D542719EA59003BD69A /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		0DD71D472719E33F003BD69A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0DD71D492719E45F003BD69A /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		0DD71D4B2719E57E003BD69A /* WeatherPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresenter.swift; sourceTree = "<group>"; };
+		0DD71D4E2719E8EC003BD69A /* BasicInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewCell.swift; sourceTree = "<group>"; };
+		0DD71D502719E96F003BD69A /* HourlyForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastTableViewCell.swift; sourceTree = "<group>"; };
+		0DD71D522719E9FE003BD69A /* AdvancedInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedInfoTableViewCell.swift; sourceTree = "<group>"; };
+		0DD71D542719EA59003BD69A /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				0DD71D492719E45F003BD69A /* WeatherViewController.swift */,
+				0DD71D4D2719E89E003BD69A /* WeatherTableViewCells */,
+				0DD71D542719EA59003BD69A /* CollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -127,6 +137,16 @@
 				0DD71D432719E276003BD69A /* Presenter */,
 			);
 			path = TodayWeather;
+			sourceTree = "<group>";
+		};
+		0DD71D4D2719E89E003BD69A /* WeatherTableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				0DD71D4E2719E8EC003BD69A /* BasicInfoTableViewCell.swift */,
+				0DD71D502719E96F003BD69A /* HourlyForecastTableViewCell.swift */,
+				0DD71D522719E9FE003BD69A /* AdvancedInfoTableViewCell.swift */,
+			);
+			path = WeatherTableViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,11 +219,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DD71D552719EA59003BD69A /* CollectionViewCell.swift in Sources */,
 				0DD71D2B2719DF8A003BD69A /* AppDelegate.swift in Sources */,
 				0DD71D4C2719E57E003BD69A /* WeatherPresenter.swift in Sources */,
 				0DD71D4A2719E45F003BD69A /* WeatherViewController.swift in Sources */,
+				0DD71D532719E9FE003BD69A /* AdvancedInfoTableViewCell.swift in Sources */,
+				0DD71D512719E96F003BD69A /* HourlyForecastTableViewCell.swift in Sources */,
 				0DD71D482719E33F003BD69A /* TabBarController.swift in Sources */,
 				0DD71D2D2719DF8A003BD69A /* SceneDelegate.swift in Sources */,
+				0DD71D4F2719E8EC003BD69A /* BasicInfoTableViewCell.swift in Sources */,
 				0DD71D462719E2F9003BD69A /* ModuleBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
