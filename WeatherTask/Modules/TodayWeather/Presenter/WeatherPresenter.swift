@@ -19,6 +19,7 @@ class WeatherPresenter: WeatherViewPresenterProtocol{
     
     var weatherInfo: WeatherInfo?
     var currentWeatherInfoModel: CurrentWeatherInfoModel?
+    var hourlyForecastModel: [HourlyForecastModel]?
     
     init(view: WeatherViewProtocol) {
         self.view = view
