@@ -86,6 +86,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
         switch indexPath.section {
         case 0:
             let cell = weatherInfoTableView.dequeueReusableCell(withIdentifier: BasicInfoTableViewCell.identifier, for: indexPath) as! BasicInfoTableViewCell
+            presenter.configureBasicInfoTableViewCell(cell: cell)
             return cell
         case 1:
             let cell = weatherInfoTableView.dequeueReusableCell(withIdentifier: HourlyForecastTableViewCell.identifier, for: indexPath) as! HourlyForecastTableViewCell
@@ -93,6 +94,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case 2:
             let cell = weatherInfoTableView.dequeueReusableCell(withIdentifier: AdvancedInfoTableViewCell.identifier, for: indexPath) as! AdvancedInfoTableViewCell
+            presenter.configureAdvancedInfoTableViewCell(cell: cell, forRow: indexPath.row)
             return cell
         default:
             fatalError("Unexpected row \(indexPath.row) in section \(indexPath.section)")
@@ -123,6 +125,11 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as! CollectionViewCell
+        if let hourlyForecastModel = presenter.hourlyForecastModel{
+            myCell.tempLabel.text = hourlyForecastModel[indexPath.row+1].temperatureString
+            myCell.timeLabel.text = hourlyForecastModel[indexPath.row+1].timeString
+            myCell.phraseImage.image = UIImage(named: hourlyForecastModel[indexPath.row+1].iconName)
+        }
         return myCell
         
     }

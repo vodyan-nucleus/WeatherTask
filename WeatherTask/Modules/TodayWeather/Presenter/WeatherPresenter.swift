@@ -13,7 +13,11 @@ protocol WeatherViewProtocol: AnyObject {
 }
 
 protocol WeatherViewPresenterProtocol: AnyObject {
+    var currentWeatherInfoModel: CurrentWeatherInfoModel? {get set}
+    var hourlyForecastModel: [HourlyForecastModel]? {get set}
     func viewWillAppear()
+    func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol)
+    func configureAdvancedInfoTableViewCell(cell: AdvancedInfoCellProtocol, forRow row: Int)
 }
 
 class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
@@ -43,6 +47,18 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
     
     func didFailUpdateLocation() {
         print("Error getting location")
+    }
+    
+    func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol) {
+        if let currentWeatherInfoModel = currentWeatherInfoModel{
+            cell.display(iconName: currentWeatherInfoModel.weatherIcon, location: currentWeatherInfoModel.city, currentTemperatureAndDescription: currentWeatherInfoModel.currentTempretureAndDescription)
+        }
+    }
+    
+    func configureAdvancedInfoTableViewCell(cell: AdvancedInfoCellProtocol, forRow row: Int){
+        guard let param = currentWeatherInfoModel?.paramArray[row] else { return }
+        guard let value = currentWeatherInfoModel?.valueArray[row] else { return }
+        cell.display(param: param, value: value)
     }
     
     func getWeatherInfo() {
