@@ -45,6 +45,11 @@ class WeatherViewController: UIViewController {
         navigationItem.title = "Today"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.viewWillAppear()
+    }
+    
     func assignbackground(){
             let background = UIImage(named: "synny")
         
@@ -62,6 +67,13 @@ class WeatherViewController: UIViewController {
 
 //MARK: - WeatherViewProtocol
 extension WeatherViewController: WeatherViewProtocol {
+    func success() {
+        weatherInfoTableView.reloadData()
+    }
+    
+    func failure(error: Error) {
+        print(error.localizedDescription)
+    }
 }
 
 //MARK: - TableView

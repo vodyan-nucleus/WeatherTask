@@ -8,10 +8,12 @@
 import Foundation
 
 protocol WeatherViewProtocol: AnyObject {
+    func success()
+    func failure(error: Error)
 }
 
 protocol WeatherViewPresenterProtocol: AnyObject {
-    
+    func viewWillAppear()
 }
 
 class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
@@ -31,11 +33,37 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
         self.locationService.delegate = self
     }
     
+    func viewWillAppear() {
+        self.locationService?.startUpdatingLocation()
+    }
+    
     func didUpdateLocation() {
-        
+        getWeatherInfo()
     }
     
     func didFailUpdateLocation() {
-        
+        print("Error getting location")
+    }
+    
+    func getWeatherInfo() {
+        guard let currentLocation = locationService.getCurrentLocation() else { return }
+        networkService.getWeatherInfo(linkBuilder: .getCurrentWeather(lat: currentLocation.lat, lon: currentLocation.lon)) { [weak self] (result: Result<WeatherInfo, Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let weatherInfo):
+                    self.currentWeatherInfoModel = CurrentWeatherInfoModel(currentWeatherData: weatherInfo.current, location: self.locationService.getCurrentLocation())
+                    for index in weatherInfo.hourly{
+                        let hourlyForecastModel = HourlyForecastModel(HourlyForecast: index)
+                        if (self.hourlyForecastModel?.append(hourlyForecastModel)) == nil {
+                            self.hourlyForecastModel = [hourlyForecastModel]
+                        }
+                    }
+                    self.view?.success()
+                case .failure(let error):
+                    self.view?.failure(error: error)
+                }
+            }
+        }
     }
 }
