@@ -17,6 +17,9 @@ protocol WeatherViewPresenterProtocol: AnyObject {
 class WeatherPresenter: WeatherViewPresenterProtocol{
     weak var view: WeatherViewProtocol?
     
+    var weatherInfo: WeatherInfo?
+    var currentWeatherInfoModel: CurrentWeatherInfoModel?
+    
     init(view: WeatherViewProtocol) {
         self.view = view
     }
