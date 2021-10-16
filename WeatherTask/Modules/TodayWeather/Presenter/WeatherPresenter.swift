@@ -16,6 +16,7 @@ protocol WeatherViewPresenterProtocol: AnyObject {
     var currentWeatherInfoModel: CurrentWeatherInfoModel? {get set}
     var hourlyForecastModel: [HourlyForecastModel]? {get set}
     func viewWillAppear()
+    func viewWillDisappear()
     func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol)
     func configureAdvancedInfoTableViewCell(cell: AdvancedInfoCellProtocol, forRow row: Int)
 }
@@ -39,6 +40,11 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
     
     func viewWillAppear() {
         self.locationService?.startUpdatingLocation()
+    }
+    
+    func viewWillDisappear() {
+        currentWeatherInfoModel = nil
+        hourlyForecastModel = nil
     }
     
     func didUpdateLocation() {

@@ -41,13 +41,24 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemCyan
-        setLayout()
         navigationItem.title = "Today"
+        setLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startSpinner()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopSpinner()
+        presenter.viewWillDisappear()
     }
 }
 
@@ -55,6 +66,7 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherViewProtocol {
     func success() {
         weatherInfoTableView.reloadData()
+        stopSpinner()
     }
     
     func failure(error: Error) {
