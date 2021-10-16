@@ -12,6 +12,8 @@
 		0D3E063C271B6F9500F8C19E /* HourlyForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3E063B271B6F9500F8C19E /* HourlyForecastModel.swift */; };
 		0D3E063F271B707000F8C19E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3E063E271B707000F8C19E /* NetworkService.swift */; };
 		0D3E0643271B70B600F8C19E /* LinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3E0642271B70B600F8C19E /* LinkBuilder.swift */; };
+		0D3E064C271B73F700F8C19E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3E064B271B73F700F8C19E /* LocationService.swift */; };
+		0D3E064E271B741A00F8C19E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3E064D271B741A00F8C19E /* Location.swift */; };
 		0DD71D2B2719DF8A003BD69A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D2A2719DF8A003BD69A /* AppDelegate.swift */; };
 		0DD71D2D2719DF8A003BD69A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD71D2C2719DF8A003BD69A /* SceneDelegate.swift */; };
 		0DD71D342719DF8B003BD69A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DD71D332719DF8B003BD69A /* Assets.xcassets */; };
@@ -33,6 +35,8 @@
 		0D3E063B271B6F9500F8C19E /* HourlyForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastModel.swift; sourceTree = "<group>"; };
 		0D3E063E271B707000F8C19E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		0D3E0642271B70B600F8C19E /* LinkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkBuilder.swift; sourceTree = "<group>"; };
+		0D3E064B271B73F700F8C19E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		0D3E064D271B741A00F8C19E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		0DD71D272719DF8A003BD69A /* WeatherTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DD71D2A2719DF8A003BD69A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DD71D2C2719DF8A003BD69A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				0D3E0641271B707E00F8C19E /* NetworkService */,
+				0D3E064A271B73DD00F8C19E /* LocationService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -84,6 +89,15 @@
 				0D3E0642271B70B600F8C19E /* LinkBuilder.swift */,
 			);
 			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		0D3E064A271B73DD00F8C19E /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+				0D3E064B271B73F700F8C19E /* LocationService.swift */,
+				0D3E064D271B741A00F8C19E /* Location.swift */,
+			);
+			path = LocationService;
 			sourceTree = "<group>";
 		};
 		0DD71D1E2719DF8A003BD69A = {
@@ -265,6 +279,7 @@
 				0D3E0643271B70B600F8C19E /* LinkBuilder.swift in Sources */,
 				0DD71D552719EA59003BD69A /* CollectionViewCell.swift in Sources */,
 				0DD71D2B2719DF8A003BD69A /* AppDelegate.swift in Sources */,
+				0D3E064E271B741A00F8C19E /* Location.swift in Sources */,
 				0D3E063C271B6F9500F8C19E /* HourlyForecastModel.swift in Sources */,
 				0DD71D4C2719E57E003BD69A /* WeatherPresenter.swift in Sources */,
 				0DD71D572719EFD9003BD69A /* WeatherInfo.swift in Sources */,
@@ -276,6 +291,7 @@
 				0DD71D482719E33F003BD69A /* TabBarController.swift in Sources */,
 				0DD71D2D2719DF8A003BD69A /* SceneDelegate.swift in Sources */,
 				0DD71D4F2719E8EC003BD69A /* BasicInfoTableViewCell.swift in Sources */,
+				0D3E064C271B73F700F8C19E /* LocationService.swift in Sources */,
 				0DD71D462719E2F9003BD69A /* ModuleBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

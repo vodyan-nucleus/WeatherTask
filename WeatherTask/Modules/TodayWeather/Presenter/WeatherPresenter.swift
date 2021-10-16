@@ -14,16 +14,28 @@ protocol WeatherViewPresenterProtocol: AnyObject {
     
 }
 
-class WeatherPresenter: WeatherViewPresenterProtocol{
+class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
+    
     weak var view: WeatherViewProtocol?
     let networkService: NetworkServiceProtocol!
+    let locationService: LocationServiceProtocol!
     
     var weatherInfo: WeatherInfo?
     var currentWeatherInfoModel: CurrentWeatherInfoModel?
     var hourlyForecastModel: [HourlyForecastModel]?
     
-    init(view: WeatherViewProtocol, networkService: NetworkServiceProtocol) {
+    init(view: WeatherViewProtocol, networkService: NetworkServiceProtocol, locationService: LocationServiceProtocol) {
         self.view = view
         self.networkService = networkService
+        self.locationService = locationService
+        self.locationService.delegate = self
+    }
+    
+    func didUpdateLocation() {
+        
+    }
+    
+    func didFailUpdateLocation() {
+        
     }
 }
