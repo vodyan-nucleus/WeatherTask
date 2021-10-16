@@ -12,9 +12,11 @@ protocol Builder {
 }
 
 class ModuleBuilder: Builder {
+    private static let networkService = NetworkService()
+    
     static func createTodayWeatherModule() -> UIViewController {
         let view = WeatherViewController()
-        let presenter = WeatherPresenter(view: view)
+        let presenter = WeatherPresenter(view: view, networkService: networkService)
         view.presenter = presenter
         return view
     }

@@ -16,12 +16,14 @@ protocol WeatherViewPresenterProtocol: AnyObject {
 
 class WeatherPresenter: WeatherViewPresenterProtocol{
     weak var view: WeatherViewProtocol?
+    let networkService: NetworkServiceProtocol!
     
     var weatherInfo: WeatherInfo?
     var currentWeatherInfoModel: CurrentWeatherInfoModel?
     var hourlyForecastModel: [HourlyForecastModel]?
     
-    init(view: WeatherViewProtocol) {
+    init(view: WeatherViewProtocol, networkService: NetworkServiceProtocol) {
         self.view = view
+        self.networkService = networkService
     }
 }
