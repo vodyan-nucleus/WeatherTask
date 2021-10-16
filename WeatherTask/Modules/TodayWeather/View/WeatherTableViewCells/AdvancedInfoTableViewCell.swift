@@ -37,7 +37,7 @@ class AdvancedInfoTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
-        backgroundColor = .clear
+        backgroundColor = .white.withAlphaComponent(0.3)
     }
     
     required init?(coder: NSCoder) {

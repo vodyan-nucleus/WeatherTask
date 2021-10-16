@@ -11,7 +11,7 @@ class WeatherViewController: UIViewController {
     var presenter: WeatherViewPresenterProtocol!
     
     private lazy var weatherInfoTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,28 +40,14 @@ class WeatherViewController: UIViewController {
 //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemCyan
         setLayout()
-        assignbackground()
         navigationItem.title = "Today"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter.viewWillAppear()
-    }
-    
-    func assignbackground(){
-            let background = UIImage(named: "synny")
-        
-            var imageView : UIImageView!
-            imageView = UIImageView(frame: view.bounds)
-            imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            imageView.contentMode =  UIView.ContentMode.scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.image = background
-            imageView.center = view.center
-            view.addSubview(imageView)
-            self.view.sendSubviewToBack(imageView)
     }
 }
 
@@ -116,7 +102,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 300
+            return 250
         case 1:
             return 130
         case 2:

@@ -8,50 +8,36 @@
 import UIKit
 
 protocol BasicInfoCellProtocol {
-    func display(location: String, description: String, currentTemperature: String, feelsLikeTemp: String)
+    func display(iconName: String, location: String, currentTemperatureAndDescription: String)
 }
 
 class BasicInfoTableViewCell: UITableViewCell {
     
     static let identifier = "BasicInfoTableViewCell"
     
-    
+    var iconImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "01d")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
     var locationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "Варшава"
-        label.font = label.font.withSize(35)
+        label.font = label.font.withSize(22)
         label.textColor = .white
         return label
     }()
     
-    var descriptionLabel: UILabel = {
+    var currentTempAndDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.text = "Приемущественно облачно"
-        label.font = label.font.withSize(17)
-        label.textColor = .white
-        return label
-    }()
-    
-    var currentTempLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 90.0)
+        label.font = UIFont.systemFont(ofSize: 23)
         label.text = "17º"
-        label.textColor = .white
-        return label
-    }()
-    
-    var maxMinTempLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = label.font.withSize(17)
-        label.text = "Max 18º, min 7º"
         label.textColor = .white
         return label
     }()
@@ -59,28 +45,30 @@ class BasicInfoTableViewCell: UITableViewCell {
     var basicInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution = UIStackView.Distribution.equalSpacing
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing = 0
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.spacing = 10
         return stackView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        backgroundColor = .white.withAlphaComponent(0.3)
         setLayout()
     }
     
     private func setLayout() {
+        
+        basicInfoStackView.addArrangedSubview(iconImage)
         basicInfoStackView.addArrangedSubview(locationLabel)
-        basicInfoStackView.addArrangedSubview(descriptionLabel)
-        basicInfoStackView.addArrangedSubview(currentTempLabel)
-        basicInfoStackView.addArrangedSubview(maxMinTempLabel)
+        basicInfoStackView.addArrangedSubview(currentTempAndDescriptionLabel)
         addSubview(basicInfoStackView)
         NSLayoutConstraint.activate([
+            iconImage.widthAnchor.constraint(equalToConstant: 100),
+            iconImage.heightAnchor.constraint(equalToConstant: 100),
             basicInfoStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            basicInfoStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            basicInfoStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
     
@@ -91,10 +79,9 @@ class BasicInfoTableViewCell: UITableViewCell {
 }
 
 extension BasicInfoTableViewCell: BasicInfoCellProtocol {
-    func display(location: String, description: String, currentTemperature: String, feelsLikeTemp: String) {
+    func display(iconName: String, location: String, currentTemperatureAndDescription: String) {
+        iconImage.image = UIImage(named: iconName)
         locationLabel.text = location
-        descriptionLabel.text = description
-        currentTempLabel.text = currentTemperature
-        maxMinTempLabel.text = feelsLikeTemp
+        currentTempAndDescriptionLabel.text = currentTemperatureAndDescription
     }
 }
