@@ -14,9 +14,9 @@ protocol LocationServiceProtocol: AnyObject {
     var delegate: LocationServiceDelegate? { get set }
 }
 
-protocol LocationServiceDelegate: AnyObject { // Delegate protocol
+protocol LocationServiceDelegate: AnyObject {
     func didUpdateLocation()
-    func didFailUpdateLocation()
+    func didFailUpdateLocation(error: Error)
 }
 
 class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate{
@@ -26,34 +26,33 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
     var locationManager = CLLocationManager()
     var location: Location?
     
-    
     override init(){
         super.init()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
     }
-    
 
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            if let location = locations.last {
-                if location.horizontalAccuracy > 0 {
-                    locationManager.stopUpdatingLocation()
-                    self.getPlace(for: location) { placemark in
-                        guard let placemark = placemark else { return }
-                        if let town = placemark.locality {
-                            self.location = Location(lat: location.coordinate.latitude, lon: location.coordinate.latitude, city: town)
+        if let location = locations.last {
+            if location.horizontalAccuracy > 0 {
+                locationManager.stopUpdatingLocation()
+                self.getPlace(for: location) { placemark in
+                    guard let placemark = placemark else { return }
+                    if let town = placemark.locality {
+                        self.location = Location(lat: location.coordinate.latitude, lon: location.coordinate.latitude, city: town)
                         }
-                        self.delegate?.didUpdateLocation()
-                    }
+                    self.delegate?.didUpdateLocation()
                 }
             }
         }
+    }
 
-        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print(error.localizedDescription)
-            delegate?.didFailUpdateLocation()
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+        if locationManager.authorizationStatus != .notDetermined {
+            delegate?.didFailUpdateLocation(error: error)
         }
+    }
     
     func getPlace(for location: CLLocation,
                       completion: @escaping (CLPlacemark?) -> Void) {
@@ -64,14 +63,14 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
                 guard error == nil else {
                     print("*** Error in \(#function): \(error!.localizedDescription)")
                     completion(nil)
-                    self.delegate?.didFailUpdateLocation()
+                    self.delegate?.didFailUpdateLocation(error: error!)
                     return
                 }
                 
                 guard let placemark = placemarks?[0] else {
                     print("*** Error in \(#function): placemark is nil")
                     completion(nil)
-                    self.delegate?.didFailUpdateLocation()
+                    self.delegate?.didFailUpdateLocation(error: error!)
                     return
                 }
                 completion(placemark)

@@ -9,12 +9,13 @@ import Foundation
 
 protocol DailyForecastViewProtocol: AnyObject {
     func success()
-    func failure(error: Error)
+    func failure(error: Errors)
 }
 
 protocol DailyForecastPresenterProtocol: AnyObject {
     func viewDidAppear()
     func viewWillDisappear()
+    func retryPressed()
     var dailyForecastModel: [DailyForecastModel]? { get }
 }
 
@@ -42,6 +43,10 @@ class DailyForecastPresenter: DailyForecastPresenterProtocol{
         dailyForecastModel = nil
     }
     
+    func retryPressed() {
+        getDailyForecastData()
+    }
+    
     func getDailyForecastData() {
         guard let currentLocation = locationService.getCurrentLocation() else { return }
         networkService.getWeatherInfo(linkBuilder: .getForecast(lat: currentLocation.lat, lon: currentLocation.lon)) { [weak self] (result: Result<DailyForecastData, Error>) in
@@ -57,8 +62,8 @@ class DailyForecastPresenter: DailyForecastPresenterProtocol{
                     }
                     self.view?.success()
                 case .failure(let error):
-                    self.view?.failure(error: error)
-                    print(error)
+                    print(error.localizedDescription)
+                    self.view?.failure(error: Errors.network)
                 }
             }
         }

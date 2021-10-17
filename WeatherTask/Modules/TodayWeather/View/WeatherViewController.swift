@@ -75,8 +75,10 @@ extension WeatherViewController: WeatherViewProtocol {
         stopSpinner()
     }
     
-    func failure(error: Error) {
-        print(error.localizedDescription)
+    func failure(error: Errors) {
+        showAlert(title: error.title, message: error.body) { action in
+            self.presenter.retryPressed()
+        }
     }
     
     func showActivityController(message: String) {

@@ -9,7 +9,7 @@ import Foundation
 
 protocol WeatherViewProtocol: AnyObject {
     func success()
-    func failure(error: Error)
+    func failure(error: Errors)
     func showActivityController(message: String)
 }
 
@@ -21,6 +21,7 @@ protocol WeatherViewPresenterProtocol: AnyObject {
     func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol)
     func configureAdvancedInfoTableViewCell(cell: AdvancedInfoCellProtocol, forRow row: Int)
     func sharePressed()
+    func retryPressed()
 }
 
 class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
@@ -53,14 +54,19 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
         getWeatherInfo()
     }
     
-    func didFailUpdateLocation() {
-        print("Error getting location")
+    func didFailUpdateLocation(error: Error) {
+        print(error.localizedDescription)
+        view?.failure(error: Errors.location)
     }
     
     func sharePressed() {
         if var currentWeatherInfoModel = currentWeatherInfoModel {
             view?.showActivityController(message: currentWeatherInfoModel.shareMessage)
         }
+    }
+    
+    func retryPressed() {
+        locationService.startUpdatingLocation()
     }
     
     func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol) {
@@ -91,7 +97,8 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
                     }
                     self.view?.success()
                 case .failure(let error):
-                    self.view?.failure(error: error)
+                    print(error.localizedDescription)
+                    self.view?.failure(error: Errors.network)
                 }
             }
         }

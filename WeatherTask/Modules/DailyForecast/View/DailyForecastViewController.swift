@@ -63,8 +63,10 @@ extension DailyForecastViewController: DailyForecastViewProtocol{
         stopSpinner()
     }
     
-    func failure(error: Error) {
-        
+    func failure(error: Errors) {
+        showAlert(title: error.title, message: error.body) { action in
+            self.presenter.retryPressed()
+        }
     }
 }
 
