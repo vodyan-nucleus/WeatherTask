@@ -69,7 +69,7 @@ class DailyForecastTableViewCell: UITableViewCell{
     }
     
     private func setLayout(){
-        addSubview(iconImage)
+        contentView.addSubview(iconImage)
         NSLayoutConstraint.activate([
             iconImage.widthAnchor.constraint(equalToConstant: 70),
             iconImage.heightAnchor.constraint(equalToConstant: 70),
@@ -79,13 +79,13 @@ class DailyForecastTableViewCell: UITableViewCell{
         
         basicInfoStackView.addArrangedSubview(timeLabel)
         basicInfoStackView.addArrangedSubview(descriptionLabel)
-        addSubview(basicInfoStackView)
+        contentView.addSubview(basicInfoStackView)
         NSLayoutConstraint.activate([
             basicInfoStackView.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 35),
             basicInfoStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
-        addSubview(tempLabel)
+        contentView.addSubview(tempLabel)
         NSLayoutConstraint.activate([
             tempLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             tempLabel.centerYAnchor.constraint(equalTo: centerYAnchor)

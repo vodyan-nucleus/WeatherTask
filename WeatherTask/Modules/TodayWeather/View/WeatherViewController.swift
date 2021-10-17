@@ -18,6 +18,7 @@ class WeatherViewController: UIViewController {
         tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        tableView.delaysContentTouches = false
         tableView.separatorColor = .lightText
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = .clear
@@ -60,6 +61,11 @@ class WeatherViewController: UIViewController {
         stopSpinner()
         presenter.viewWillDisappear()
     }
+
+//MARK: - Actions
+    @objc func sharePressed() {
+        presenter.sharePressed()
+    }
 }
 
 //MARK: - WeatherViewProtocol
@@ -71,6 +77,11 @@ extension WeatherViewController: WeatherViewProtocol {
     
     func failure(error: Error) {
         print(error.localizedDescription)
+    }
+    
+    func showActivityController(message: String) {
+        let activityController = UIActivityViewController(activityItems: [message], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
     }
 }
 
@@ -98,6 +109,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
         switch indexPath.section {
         case 0:
             let cell = weatherInfoTableView.dequeueReusableCell(withIdentifier: BasicInfoTableViewCell.identifier, for: indexPath) as! BasicInfoTableViewCell
+            cell.sendButton.addTarget(self, action: #selector(sharePressed), for: .touchUpInside)
             presenter.configureBasicInfoTableViewCell(cell: cell)
             return cell
         case 1:

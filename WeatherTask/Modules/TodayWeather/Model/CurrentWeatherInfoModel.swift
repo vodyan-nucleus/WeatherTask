@@ -97,4 +97,6 @@ struct CurrentWeatherInfoModel {
     lazy var valueArray = [sunrizeTimeString, sunsetTimeString, clouds, humidity, windString, rain, feelsLikeTemp, pressureString, visibilityString, uvi]
     
     let paramArray = ["ВОСХОД СОЛНЦА", "ЗАХОД СОЛНЦА", "ОБЛАЧНОСТЬ", "ВЛАЖНОСТЬ", "ВЕТЕР", "ОСАДКИ", "ОЩУЩАЕТСЯ КАК", "ДАВЛЕНИЕ", "ВИДИМОСТЬ", "УФ-ИНДЕКС"]
+    
+    lazy var shareMessage = "Погода сегодня в городе \(city): \(currentTempretureAndDescription), давление \(pressureString), влажность \(humidity), ветер \(windString)."
 }

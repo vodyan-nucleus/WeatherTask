@@ -15,7 +15,6 @@ protocol DailyForecastViewProtocol: AnyObject {
 protocol DailyForecastPresenterProtocol: AnyObject {
     func viewDidAppear()
     func viewWillDisappear()
-    func getCountOfTimeStamps() -> Int
     var dailyForecastModel: [DailyForecastModel]? { get }
 }
 
@@ -41,11 +40,6 @@ class DailyForecastPresenter: DailyForecastPresenterProtocol{
     
     func viewWillDisappear() {
         dailyForecastModel = nil
-    }
-    
-    func getCountOfTimeStamps() -> Int {
-        guard let dailyForecastModel = dailyForecastModel else {return 8}
-        return dailyForecastModel.count - 32
     }
     
     func getDailyForecastData() {

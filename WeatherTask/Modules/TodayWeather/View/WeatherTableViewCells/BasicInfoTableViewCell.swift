@@ -51,15 +51,25 @@ class BasicInfoTableViewCell: UITableViewCell {
         stackView.spacing = 10
         return stackView
     }()
+    
+    var sendButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        button.tintColor = .white
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .white.withAlphaComponent(0.3)
+        isUserInteractionEnabled = true
         setLayout()
     }
     
     private func setLayout() {
-        
         basicInfoStackView.addArrangedSubview(iconImage)
         basicInfoStackView.addArrangedSubview(locationLabel)
         basicInfoStackView.addArrangedSubview(currentTempAndDescriptionLabel)
@@ -70,6 +80,15 @@ class BasicInfoTableViewCell: UITableViewCell {
             basicInfoStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             basicInfoStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
+        
+        contentView.addSubview(sendButton)
+        NSLayoutConstraint.activate([
+            sendButton.widthAnchor.constraint(equalToConstant: 33),
+            sendButton.heightAnchor.constraint(equalToConstant: 38),
+            sendButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+        ])
+        
     }
     
     required init?(coder: NSCoder) {

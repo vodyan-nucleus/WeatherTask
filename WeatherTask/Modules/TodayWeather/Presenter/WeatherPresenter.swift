@@ -10,6 +10,7 @@ import Foundation
 protocol WeatherViewProtocol: AnyObject {
     func success()
     func failure(error: Error)
+    func showActivityController(message: String)
 }
 
 protocol WeatherViewPresenterProtocol: AnyObject {
@@ -19,6 +20,7 @@ protocol WeatherViewPresenterProtocol: AnyObject {
     func viewWillDisappear()
     func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol)
     func configureAdvancedInfoTableViewCell(cell: AdvancedInfoCellProtocol, forRow row: Int)
+    func sharePressed()
 }
 
 class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
@@ -53,6 +55,12 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
     
     func didFailUpdateLocation() {
         print("Error getting location")
+    }
+    
+    func sharePressed() {
+        if var currentWeatherInfoModel = currentWeatherInfoModel {
+            view?.showActivityController(message: currentWeatherInfoModel.shareMessage)
+        }
     }
     
     func configureBasicInfoTableViewCell(cell: BasicInfoCellProtocol) {
