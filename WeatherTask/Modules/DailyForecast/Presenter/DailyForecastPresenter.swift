@@ -16,7 +16,7 @@ protocol DailyForecastPresenterProtocol: AnyObject {
     func viewDidAppear()
     func viewWillDisappear()
     func retryPressed()
-    var dailyForecastModel: [DailyForecastModel]? { get }
+    func configureDailyForecastCell(cell: DailyForecastCellProtocol, forRow row: Int)
 }
 
 class DailyForecastPresenter: DailyForecastPresenterProtocol{
@@ -47,8 +47,14 @@ class DailyForecastPresenter: DailyForecastPresenterProtocol{
         getDailyForecastData()
     }
     
+    func configureDailyForecastCell(cell: DailyForecastCellProtocol, forRow row: Int) {
+        if let dailyForecastModel = dailyForecastModel{
+            cell.display(time: dailyForecastModel[row].time, description: dailyForecastModel[row].description, temperature: dailyForecastModel[row].temperatureString, image: dailyForecastModel[row].weatherIcon)
+        }
+    }
+    
     func getDailyForecastData() {
-        guard let currentLocation = locationService.getCurrentLocation() else { return }
+        guard let currentLocation = locationService.getLastLocation() else { return }
         networkService.getWeatherInfo(linkBuilder: .getForecast(lat: currentLocation.lat, lon: currentLocation.lon)) { [weak self] (result: Result<DailyForecastData, Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {

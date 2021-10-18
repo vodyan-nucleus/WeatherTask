@@ -78,11 +78,7 @@ extension DailyForecastViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = dailyForecastTableView.dequeueReusableCell(withIdentifier: DailyForecastTableViewCell.identifier, for: indexPath) as! DailyForecastTableViewCell
-        if let dailyForecastModel = presenter.dailyForecastModel {
-            cell.timeLabel.text = dailyForecastModel[indexPath.row].time
-            cell.iconImage.image = UIImage(named: "\(dailyForecastModel[indexPath.row].weatherIcon)")
-            cell.tempLabel.text = dailyForecastModel[indexPath.row].temperatureString
-        }
+        presenter.configureDailyForecastCell(cell: cell, forRow: indexPath.row)
         return cell
     }
     

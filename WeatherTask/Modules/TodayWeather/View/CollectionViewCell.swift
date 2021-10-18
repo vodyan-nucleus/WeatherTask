@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HourlyForecastCellProtocol {
+    func display(time: String, temperature: String, image: String)
+}
+
 class CollectionViewCell: UICollectionViewCell {
     
    static let identifier = "CollectionViewCell"
@@ -68,5 +72,13 @@ class CollectionViewCell: UICollectionViewCell {
             hourlyForecastStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             hourlyForecastStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+}
+
+extension CollectionViewCell: HourlyForecastCellProtocol {
+    func display(time: String, temperature: String, image: String) {
+        timeLabel.text = time
+        tempLabel.text = temperature
+        phraseImage.image = UIImage(named: "\(image)")
     }
 }

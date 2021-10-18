@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol DailyForecastCellProtocol {
+    func display(time: String, description: String, temperature: String, image: String)
+}
+
 class DailyForecastTableViewCell: UITableViewCell{
     
     static let identifier = "BasicInfoTableViewCell"
@@ -16,7 +20,7 @@ class DailyForecastTableViewCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "12:00"
-        label.font = label.font.withSize(19)
+        label.font = label.font.withSize(17)
         label.textColor = .white
         return label
     }()
@@ -26,7 +30,7 @@ class DailyForecastTableViewCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "Ясно"
-        label.font = label.font.withSize(17)
+        label.font = label.font.withSize(13)
         label.textColor = .white
         return label
     }()
@@ -36,7 +40,7 @@ class DailyForecastTableViewCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "17º"
-        label.font = label.font.withSize(45)
+        label.font = label.font.withSize(35)
         label.textColor = .white
         return label
     }()
@@ -71,8 +75,8 @@ class DailyForecastTableViewCell: UITableViewCell{
     private func setLayout(){
         contentView.addSubview(iconImage)
         NSLayoutConstraint.activate([
-            iconImage.widthAnchor.constraint(equalToConstant: 70),
-            iconImage.heightAnchor.constraint(equalToConstant: 70),
+            iconImage.widthAnchor.constraint(equalToConstant: 60),
+            iconImage.heightAnchor.constraint(equalToConstant: 60),
             iconImage.centerYAnchor.constraint(equalTo: centerYAnchor),
             iconImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
         ])
@@ -81,14 +85,23 @@ class DailyForecastTableViewCell: UITableViewCell{
         basicInfoStackView.addArrangedSubview(descriptionLabel)
         contentView.addSubview(basicInfoStackView)
         NSLayoutConstraint.activate([
-            basicInfoStackView.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 35),
+            basicInfoStackView.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 30),
             basicInfoStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
         contentView.addSubview(tempLabel)
         NSLayoutConstraint.activate([
-            tempLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            tempLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             tempLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+}
+
+extension DailyForecastTableViewCell: DailyForecastCellProtocol {
+    func display(time: String, description: String, temperature: String, image: String) {
+        timeLabel.text = time
+        descriptionLabel.text = description
+        tempLabel.text = temperature
+        iconImage.image = UIImage(named: "\(image)")
     }
 }

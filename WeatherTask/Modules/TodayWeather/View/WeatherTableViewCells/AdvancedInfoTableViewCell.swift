@@ -11,7 +11,6 @@ protocol AdvancedInfoCellProtocol {
     func display(param: String, value: String)
 }
 
-
 class AdvancedInfoTableViewCell: UITableViewCell {
     
     static let identifier = "AdvancedInfoTableViewCell"

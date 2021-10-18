@@ -9,19 +9,13 @@ import Foundation
 import CoreLocation
 
 protocol LocationServiceProtocol: AnyObject {
-    func startUpdatingLocation()
-    func getCurrentLocation() -> Location?
-    var delegate: LocationServiceDelegate? { get set }
-}
-
-protocol LocationServiceDelegate: AnyObject {
-    func didUpdateLocation()
-    func didFailUpdateLocation(error: Errors)
+    func startUpdatingLocation(complition: @escaping ((Error?) -> Void))
+    func getLastLocation() -> Location?
 }
 
 class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate{
 
-    weak var delegate: LocationServiceDelegate?
+    var completion: ((Error?) -> Void)?
     
     var locationManager = CLLocationManager()
     var location: Location?
@@ -40,8 +34,8 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
                     guard let placemark = placemark else { return }
                     if let town = placemark.locality {
                         self.location = Location(lat: location.coordinate.latitude, lon: location.coordinate.latitude, city: town)
-                        }
-                    self.delegate?.didUpdateLocation()
+                    }
+                    self.completion?(nil)
                 }
             }
         }
@@ -50,42 +44,38 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
         if locationManager.authorizationStatus != .notDetermined {
-            delegate?.didFailUpdateLocation(error: Errors.location)
+            completion?(error)
         }
     }
     
     func getPlace(for location: CLLocation,
                       completion: @escaping (CLPlacemark?) -> Void) {
             
-            let geocoder = CLGeocoder()
-            geocoder.reverseGeocodeLocation(location) { placemarks, error in
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
                 
-                if let error = error {
-                    print("*** Error in \(#function): \(error.localizedDescription)")
-                    completion(nil)
-                    if (error as NSError).code == 2 {
-                        self.delegate?.didFailUpdateLocation(error: Errors.network)
-                    } else {
-                        self.delegate?.didFailUpdateLocation(error: Errors.location)
-                    }
-                    return
-                }
-                
-                guard let placemark = placemarks?[0] else {
-                    print("*** Error in \(#function): placemark is nil")
-                    completion(nil)
-                    self.delegate?.didFailUpdateLocation(error: Errors.location)
-                    return
-                }
-                completion(placemark)
-            }
+        if let error = error {
+            print("*** Error in \(#function): \(error.localizedDescription)")
+            completion(nil)
+            self.completion?(error)
+            return
         }
-    
-    func startUpdatingLocation() {
-        locationManager.startUpdatingLocation()
+                
+        guard let placemark = placemarks?[0] else {
+            print("*** Error in \(#function): placemark is nil")
+            completion(nil)
+            return
+        }
+        completion(placemark)
+        }
     }
     
-    func getCurrentLocation() -> Location? {
+    func startUpdatingLocation(complition: @escaping ((Error?) -> Void)) {
+        locationManager.startUpdatingLocation()
+        self.completion = complition
+    }
+    
+    func getLastLocation() -> Location? {
         guard let location = location else {return nil}
         return location
     }

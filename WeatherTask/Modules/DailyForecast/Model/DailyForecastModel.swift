@@ -16,7 +16,7 @@ struct DailyForecastModel {
     init(dailyForecastData daily: List) {
         self.date = daily.dt
         self.temperature = daily.main.temp
-        self.description = daily.weather[0].description
+        self.description = daily.weather[0].description.capitalizingFirstLetter()
         self.weatherIcon = daily.weather[0].icon
     }
 
@@ -24,14 +24,6 @@ struct DailyForecastModel {
         let time = Date(timeIntervalSince1970: TimeInterval(date))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EE, HH:mm"
-        dateFormatter.locale = Locale(identifier: "ru")
-        return "\(dateFormatter.string(from: time))".capitalizingFirstLetter()
-    }
-    
-    var dayOfWeek: String {
-        let time = Date(timeIntervalSince1970: TimeInterval(date))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
         dateFormatter.locale = Locale(identifier: "ru")
         return "\(dateFormatter.string(from: time))".capitalizingFirstLetter()
     }
