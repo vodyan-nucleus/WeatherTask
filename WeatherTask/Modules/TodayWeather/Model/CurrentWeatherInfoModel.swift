@@ -12,15 +12,15 @@ struct CurrentWeatherInfoModel {
     let description: String
     let temperature: Double
     let feelsLikeTemp: String
-    private let sunrize: Int
-    private let sunset: Int
-    private let pressure: Int
+    let sunrize: Int
+    let sunset: Int
+    let pressure: Int
     let humidity: String
     let clouds: String
     let uvi: String
-    private let visibility: Double
-    private let windSpeed: Double
-    private let windDegrees: Double
+    let visibility: Double
+    let windSpeed: Double
+    let windDegrees: Double
     let rain: String
     let weatherIcon: String
     

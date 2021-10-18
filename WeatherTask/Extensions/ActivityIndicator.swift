@@ -13,11 +13,12 @@ extension UIViewController {
     
     func startSpinner() {
         aView = UIView(frame: self.view.bounds)
-        aView?.backgroundColor = .systemBackground
-        let ai = UIActivityIndicatorView(style: .large)
-        ai.center = aView!.center
-        ai.startAnimating()
-        aView?.addSubview(ai)
+        aView?.backgroundColor = .systemCyan
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .white
+        activityIndicator.center = aView!.center
+        activityIndicator.startAnimating()
+        aView?.addSubview(activityIndicator)
         self.view.addSubview(aView!)
     }
     

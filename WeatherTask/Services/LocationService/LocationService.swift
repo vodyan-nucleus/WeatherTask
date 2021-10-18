@@ -55,14 +55,14 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
                 
         if let error = error {
-            print("*** Error in \(#function): \(error.localizedDescription)")
+            print("Error in \(#function): \(error.localizedDescription)")
             completion(nil)
             self.completion?(error)
             return
         }
                 
         guard let placemark = placemarks?[0] else {
-            print("*** Error in \(#function): placemark is nil")
+            print("Error in \(#function): placemark is nil")
             completion(nil)
             return
         }
