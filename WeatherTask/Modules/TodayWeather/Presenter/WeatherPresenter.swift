@@ -54,9 +54,8 @@ class WeatherPresenter: WeatherViewPresenterProtocol, LocationServiceDelegate{
         getWeatherInfo()
     }
     
-    func didFailUpdateLocation(error: Error) {
-        print(error.localizedDescription)
-        view?.failure(error: Errors.location)
+    func didFailUpdateLocation(error: Errors) {
+            view?.failure(error: error)
     }
     
     func sharePressed() {

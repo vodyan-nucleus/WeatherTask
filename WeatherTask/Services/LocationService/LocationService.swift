@@ -16,7 +16,7 @@ protocol LocationServiceProtocol: AnyObject {
 
 protocol LocationServiceDelegate: AnyObject {
     func didUpdateLocation()
-    func didFailUpdateLocation(error: Error)
+    func didFailUpdateLocation(error: Errors)
 }
 
 class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate{
@@ -50,7 +50,7 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
         if locationManager.authorizationStatus != .notDetermined {
-            delegate?.didFailUpdateLocation(error: error)
+            delegate?.didFailUpdateLocation(error: Errors.location)
         }
     }
     
@@ -60,17 +60,21 @@ class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDeleg
             let geocoder = CLGeocoder()
             geocoder.reverseGeocodeLocation(location) { placemarks, error in
                 
-                guard error == nil else {
-                    print("*** Error in \(#function): \(error!.localizedDescription)")
+                if let error = error {
+                    print("*** Error in \(#function): \(error.localizedDescription)")
                     completion(nil)
-                    self.delegate?.didFailUpdateLocation(error: error!)
+                    if (error as NSError).code == 2 {
+                        self.delegate?.didFailUpdateLocation(error: Errors.network)
+                    } else {
+                        self.delegate?.didFailUpdateLocation(error: Errors.location)
+                    }
                     return
                 }
                 
                 guard let placemark = placemarks?[0] else {
                     print("*** Error in \(#function): placemark is nil")
                     completion(nil)
-                    self.delegate?.didFailUpdateLocation(error: error!)
+                    self.delegate?.didFailUpdateLocation(error: Errors.location)
                     return
                 }
                 completion(placemark)
