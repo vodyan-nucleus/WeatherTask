@@ -50,10 +50,6 @@ class WeatherPresenter: WeatherViewPresenterProtocol{
         hourlyForecastModel = nil
     }
     
-    func didFailUpdateLocation(error: Errors) {
-            view?.failure(error: error)
-    }
-    
     func sharePressed() {
         if var currentWeatherInfoModel = currentWeatherInfoModel {
             view?.showActivityController(message: currentWeatherInfoModel.shareMessage)
